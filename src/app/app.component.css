@@ -1,4 +1,12 @@
-#mapa-mapbox{
-	height: 600px;
-	background: red;
+body {
+    height: 100%;
+}
+
+header {
+    height: 20%;
+}
+
+div {
+    height: 500px;
+    background: red;
 }

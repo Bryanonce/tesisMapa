@@ -1,0 +1,84 @@
+//Servicios
+import { ApiRestService } from './servicios/api-rest.service';
+
+import { Component,OnInit } from '@angular/core';
+import { environment } from '../environments/environment';
+import * as mapboxgl from 'mapbox-gl';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'proyectoTesis';
+  //mapa: mapboxgl.Map;
+  public coorden = [];
+  constructor(public datos: ApiRestService){
+  	this.datos.getDatosJson(environment.Apirest).subscribe((res:any)=>{
+  		res.usuarios.forEach((elemento)=>{
+			this.coorden.push([
+				{
+					"type": "Feature",
+					"properties": {},
+					"geometry": {
+						"type": "Point",
+						"coordinates": [elemento.long,elemento.lat]
+					}
+				}
+			]);
+		  })
+		  
+  		//console.log(res.usuarios);
+		  console.log(this.coorden);
+		  //return this.cargarMapa()
+  		/*for(let i=0;i<res.length;i++){
+  			this.coorden.push(res[i].lat,res[i].long);
+  		}*/
+	});
+  }
+  cargarMapa(){
+	var map = new mapboxgl.Map({ 
+		accessToken: environment.claveMapbox,
+		container: 'mapa-mapbox', // container id
+		style: 'mapbox://styles/mapbox/streets-v11',
+		center: [-80.096961, -0.712307], // starting position
+		zoom: 15 // starting zoom
+	})
+	
+	map.on('load', function () {
+		// Add a geojson point source.
+		// Heatmap layers also work with a vector tile source.
+		console.log("Mapa cargado")
+		console.log(this.coorden);
+		map.addSource('earthquakes', 
+		{
+			type: 'geojson',
+			data: {
+				"type": "FeatureCollection",
+				"features": [{
+					"type": "Feature",
+					"properties": {},
+					"geometry": {
+					"type": "Point",
+					"coordinates": this.coorden
+					}
+				}]
+			}
+		}
+		);
+		map.addLayer({
+			id: 'trees-point',
+			type: 'circle',
+			source: 'earthquakes',
+			paint: {
+			  'circle-radius': 3,
+			  'circle-color': '#223b53',
+			  'circle-stroke-color': 'white',
+			  'circle-stroke-width': 1,
+			  'circle-opacity': 0.5
+			}
+		  })
+	})	
+  }
+}
