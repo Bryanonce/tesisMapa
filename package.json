@@ -2,9 +2,9 @@
     "name": "proyecto-tesis",
     "version": "0.0.0",
     "scripts": {
-        "heroku-postbuild": "ng build --prod",
+        "heroku-postbuild": "ng serve",
         "ng": "ng",
-        "start": "node server.js",
+        "start": "ng serve",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",

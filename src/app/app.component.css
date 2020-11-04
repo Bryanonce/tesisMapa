@@ -1,3 +1,8 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
 body {
     height: 100%;
 }
@@ -6,7 +11,23 @@ header {
     height: 20%;
 }
 
-div {
+#mapa-mapbox {
     height: 500px;
     background: red;
+}
+
+.contenedor {
+    display: flex;
+    margin: 20px;
+}
+
+.contenedor div {
+    width: 20%;
+    justify-content: space-around;
+}
+
+.contenedor input {
+    border-radius: 5px;
+    width: 60%;
+    margin-top: 5px;
 }

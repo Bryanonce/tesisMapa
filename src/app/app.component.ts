@@ -3,6 +3,8 @@ import { ApiRestService } from './servicios/api-rest.service';
 import { Component,OnInit } from '@angular/core';
 import { environment } from '../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
+import { Consulta } from './models/consulta';
+
 
 @Component({
   selector: 'app-root',
@@ -13,24 +15,17 @@ export class AppComponent implements OnInit{
   title = 'proyectoTesis';
   //mapa: mapboxgl.Map;
   public coorden = [];
+  public consulta:Consulta;
+  public anioIni:Number;
   constructor(public datos: ApiRestService){
-	this.datos.getDatosJson(environment.Apirest).subscribe((res:any)=>{
-		res.usuarios.forEach((elemento)=>{
-		this.coorden.push(
-			{
-				"type": "Feature",
-				"properties": {},
-				"geometry": {
-					"type": "Point",
-					"coordinates": [elemento.long,elemento.lat]
-				}
-			}
-		);
-		})
-	});
+	this.consulta = new Consulta()
+	
   }
-  ngOnInit(){	
-	console.log(this.coorden);
+  pruebaImprimir(){
+	  console.log(this.consulta);
+  }
+  cargarMapa(){
+	this.coorden = [];
 	var map = new mapboxgl.Map({ 
 		accessToken: environment.claveMapbox,
 		container: 'mapa-mapbox', // container id
@@ -38,6 +33,20 @@ export class AppComponent implements OnInit{
 		center: [-80.096961, -0.712307], // starting position
 		zoom: 15 // starting zoom
 	})
+	this.datos.getDatosJson(environment.Apirest,this.consulta).subscribe((res:any)=>{
+		res.usuarios.forEach((elemento)=>{
+			this.coorden.push(
+				{
+					"type": "Feature",
+					"properties": {},
+					"geometry": {
+						"type": "Point",
+						"coordinates": [elemento.long,elemento.lat]
+					}
+				}
+			);
+		})
+	});
 	console.log("Mapa cargando .....")
 	map.on('load',()=>{
 		console.log(this.coorden);
@@ -71,5 +80,9 @@ export class AppComponent implements OnInit{
 		})
 		
 	})
+  }
+
+  ngOnInit(){	
+	return this.cargarMapa();
   }
 }

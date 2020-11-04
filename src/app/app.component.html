@@ -10,9 +10,40 @@
 
 
 <body>
-    <header>
-        hola
-    </header>
+    <div class="contenedor">
+        <div class="anio">
+            <label>Ingrese Año Inicial</label>
+            <input type="text" placeholder="Ingrese Año Inicio" [(ngModel)]="consulta.anioIni" value="2020"><br><br>
+            <label>Ingrese Año Final</label>
+            <input type="text" placeholder="Ingrese Año Fin" [(ngModel)]="consulta.anioFin" value="2040"><br>
+        </div>
+        <div class="mes">
+            <label>Ingrese Mes Inicial</label>
+            <input type="text" placeholder="Ingrese Mes Inicio" [(ngModel)]="consulta.mesIni" value="0"><br><br>
+            <label>Ingrese Mes Final</label>
+            <input type="text" placeholder="Ingrese Mes Fin" [(ngModel)]="consulta.mesFin" value="11"><br>
+        </div>
+        <div class="dia">
+            <label>Ingrese Día Inicial</label>
+            <input type="text" placeholder="Ingrese Día Inicio" [(ngModel)]="consulta.diaIni" value="0"><br><br>
+            <label>Ingrese Día Final</label>
+            <input type="text" placeholder="Ingrese Día Fin" [(ngModel)]="consulta.diaFin" value="11"><br>
+        </div>
+        <div class="hora">
+            <label>Ingrese Hora Inicial</label>
+            <input type="text" placeholder="Ingrese Hora Inicio" [(ngModel)]="consulta.horaIni" value="1"><br><br>
+            <label>Ingrese Hora Final</label>
+            <input type="text" placeholder="Ingrese Hora Fin" [(ngModel)]="consulta.horaFin" value="23"><br>
+        </div>
+        <div class="minu">
+            <label>Ingrese Hora Inicial</label>
+            <input type="text" placeholder="Ingrese Hora Inicio" [(ngModel)]="consulta.minutoIni" value="1"><br><br>
+            <label>Ingrese Hora Final</label>
+            <input type="text" placeholder="Ingrese Hora Fin" [(ngModel)]="consulta.minutoFin" value="59"><br>
+        </div>
+        <button (click)="cargarMapa()">Enviar</button>
+    </div>
+
     <div id="mapa-mapbox"></div>
 </body>
 
